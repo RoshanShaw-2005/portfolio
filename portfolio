@@ -13,24 +13,37 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Nunito', sans-serif;
             background: #000;
             color: #fff;
             overflow-x: hidden;
         }
 
         #cursor {
-            width: 20px;
-            height: 20px;
-            background: #ff0000;
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s;
-        }
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 0, 0, 0.8);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, box-shadow 0.3s;
+    box-shadow: 0 0 20px 5px rgba(255, 0, 0, 0.5),
+                0 0 40px 10px rgb(245, 221, 5),
+                0 0 60px 15px rgba(255, 0, 0, 0.1);
+    mix-blend-mode: screen;
+}
 
+/* Add this for stronger glow effect when hovering interactive elements */
+#cursor.cursor-expanded {
+    width: 30px !important;
+    height: 30px !important;
+    background: rgba(255, 0, 0, 0.9) !important;
+    box-shadow: 0 0 30px 10px rgba(255, 0, 0, 0.6),
+                0 0 60px 20px rgba(255, 0, 0, 0.4),
+                0 0 90px 30px rgba(255, 0, 0, 0.2) !important;
+}
         #video-bg {
             position: fixed;
             right: 0;
@@ -166,7 +179,7 @@
     <div id="cursor"></div>
 
     <video id="video-bg" autoplay muted loop>
-        <source src="/api/placeholder/1920/1080" type="video/mp4">
+        <source src="https://videos.pexels.com/video-files/3141210/3141210-sd_640_360_25fps.mp4" type="video/mp4">
     </video>
 
     <nav>
@@ -179,8 +192,105 @@
 
     <section id="home" class="hero">
         <h1>Welcome to My Portfolio</h1>
-        <p>Frontend Developer & UI Designer | Student at Indian Institute of Technology Patna</p>
+        <p>Frontend Developer & UI Designer | Computer Science Student at Indian Institute of Technology Patna</p>
     </section>
+
+    <section id="about">
+        <h2>About Me</h2>
+        <p>I'm a passionate computer science student at IIT Patna, 
+            where I'm building a solid foundation in programming, data analysis, and machine learning. With hands-on experience in Python, Java, and web development (HTML, CSS, JavaScript),
+             I'm eager to create innovative tech solutions. 
+             I thrive on challenges, especially those that require critical thinking and problem-solving, and
+              I'm actively preparing to clear FAANG interviews and pursue a career as a Software Development Engineer.</p>
+    </section>              
+
+    <section id="skills">
+        <h2>My Skills</h2>
+        <ul>
+            <li>HTML</li>  <li>CSS</li> <li>JavaScript</li> 
+            <li>Python</li> <li>java</li> <li>SQL</li>
+        </ul>   
+    </section>
+
+    <section id="experience">
+        <h2>My Experience</h2>
+        <ul>
+            <li>Frontend Developer</li>
+            <li>UI Designer</li>
+            <li>Student</li>
+        </ul>
+    </section>
+
+    <section id="education">    
+        <h2>My Education</h2>
+        <ul>
+            <li>Frontend Developer</li>
+            <li>UI Designer</li>
+            <li>Student</li>
+        </ul>
+    </section>
+
+    <section id="services">
+        <h2>My Services</h2>
+        <ul>
+            <li>Frontend Development</li>
+            <li>UI Design</li>
+            <li>Graphic Design</li> 
+        </ul>
+    </section>  
+    
+
+    <section id="interests">
+        <h2>My Interests</h2>
+        <ul>
+            <li>Frontend Development</li>
+            <li>UI Design</li>
+            <li>Graphic Design</li>
+        </ul>
+    </section>  
+
+    <section id="Certificates">
+        <h2>My Certificates</h2>
+        <ul>
+            <li>Python Basics Certificate</li>
+            <li>JavaScript Basics Certificate</li>
+            <li>HTML Basics Certificate</li>
+        </ul>
+    </section>
+
+    <section id="awards">
+        <h2>My Awards</h2>
+        <ul>
+            <li>Frontend Development Award</li>
+            <li>UI Design Award</li>
+            <li>Graphic Design Award</li>
+        </ul>
+    </section>
+
+    <section id="languages">
+        <h2>My Languages</h2>
+        <ul>
+            <li>English</li>
+            <li>Hindi</li>
+            <li>Bengali</li>
+        </ul>
+    </section>
+
+    <section id="hobbies">
+        <h2>My Hobbies</h2> 
+        <ul>
+            <li>Reading</li>
+            <li>Music</li>
+            <li>Travelling</li> 
+            <li>Coding</li> 
+            <li>Singing</li> 
+            <li>football</li> 
+            <li>cooking</li> 
+            <li>gaming</li> 
+            <li>photography</li> 
+            <li>using ai in everyday life</li> 
+        </ul>
+    </section>  
 
     <section id="projects">
         <h2>My Projects</h2>
