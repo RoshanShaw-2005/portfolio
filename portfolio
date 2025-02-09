@@ -340,117 +340,79 @@
             <button type="submit">Send Message</button>
         </form>
     </section>
+<script>
+    const cursor = document.getElementById('cursor');
+    let cursorX = 0, cursorY = 0, targetX = 0, targetY = 0;
+    const smoothFactor = 0.15; // Adjust for smoother movement
 
-    <script>
-       const cursor = document.getElementById('cursor');
-let cursorX = 0;
-let cursorY = 0;
-let targetX = 0;
-let targetY = 0;
-
-// Smooth movement configuration
-const smoothFactor = 0.15; // Adjust for faster/slower movement
-const updateRate = 1000/60; // 60fps update rate
-
-// Track the actual mouse position
-document.addEventListener('mousemove', (e) => {
-    targetX = e.clientX;
-    targetY = e.clientY;
-});
-
-// Smooth cursor movement using lerp (linear interpolation)
-function lerp(start, end, factor) {
-    return start + (end - start) * factor;
-}
-
-// Update cursor position
-function updateCursorPosition() {
-    // Calculate new position
-    cursorX = lerp(cursorX, targetX, smoothFactor);
-    cursorY = lerp(cursorY, targetY, smoothFactor);
-
-    // Apply transforms for better performance
-    cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
-
-    // Request next frame
-    requestAnimationFrame(updateCursorPosition);
-}
-
-// Start the animation loop
-updateCursorPosition();
-
-// Handle cursor expansion on interactive elements
-const interactiveElements = document.querySelectorAll('a, button, .project-card, .skill-card, input, textarea');
-
-interactiveElements.forEach(element => {
-    element.addEventListener('mouseenter', () => {
-        cursor.classList.add('expanded');
-        // Optional: Add magnetic effect when hovering
-        element.addEventListener('mousemove', magneticEffect);
+    document.addEventListener('mousemove', (e) => {
+        targetX = e.clientX;
+        targetY = e.clientY;
     });
 
-    element.addEventListener('mouseleave', () => {
-        cursor.classList.remove('expanded');
-        // Remove magnetic effect when not hovering
-        element.removeEventListener('mousemove', magneticEffect);
-    });
-});
-
-// Magnetic effect function for interactive elements
-function magneticEffect(e) {
-    const bounds = this.getBoundingClientRect();
-    const centerX = bounds.left + bounds.width / 2;
-    const centerY = bounds.top + bounds.height / 2;
-    const distance = 0.2; // Adjust magnetic strength
-
-    targetX = lerp(targetX, centerX, distance);
-    targetY = lerp(targetY, centerY, distance);
-}
-
-// Handle cursor visibility
-document.addEventListener('mouseenter', () => {
-    cursor.style.opacity = '1';
-});
-
-document.addEventListener('mouseleave', () => {
-    cursor.style.opacity = '0';
-});
-
-// Prevent cursor from disappearing during window blur
-let isVisible = true;
-document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-        isVisible = cursor.style.opacity === '1';
-        cursor.style.opacity = '0';
-    } else if (isVisible) {
-        cursor.style.opacity = '1';
+    function lerp(start, end, factor) {
+        return start + (end - start) * factor;
     }
-});
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+
+    function updateCursorPosition() {
+        cursorX = lerp(cursorX, targetX, smoothFactor);
+        cursorY = lerp(cursorY, targetY, smoothFactor);
+        cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+        requestAnimationFrame(updateCursorPosition);
+    }
+
+    updateCursorPosition();
+
+    // Cursor hover effect
+    document.querySelectorAll('a, button, .project-card, .skill-card, input, textarea').forEach(element => {
+        element.addEventListener('mouseenter', () => {
+            cursor.classList.add('expanded');
+        });
+        element.addEventListener('mouseleave', () => {
+            cursor.classList.remove('expanded');
+        });
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
             });
         });
+    });
 
-        // Intersection Observer for fade-in effect
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
+    // Intersection Observer for fade-in effect
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
 
+    document.querySelectorAll('section').forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(50px)';
+        section.style.transition = 'all 0.6s ease-out';
+        observer.observe(section);
+    });
+
+    // Parallax effect
+    window.addEventListener('scroll', () => {
         document.querySelectorAll('section').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(50px)';
-            section.style.transition = 'all 0.6s ease-out';
-            observer.observe(section);
+            const scroll = window.pageYOffset;
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            if (scroll > sectionTop - window.innerHeight / 2 && scroll < sectionTop + sectionHeight) {
+                section.style.opacity = 1;
+                section.style.transform = 'translateY(0)';
+            }
         });
-    </script>
+    });
+</script>
+
 </body>
 </html>
