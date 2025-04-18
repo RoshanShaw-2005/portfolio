@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Portfolio</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Roshan's Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500&family=Orbitron:wght@400;500;600&family=Roboto+Mono&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap');
-
         :root {
             --neon-green: #00ff9d;
             --dark-green: #004d2e;
             --neon-red: #ff0044;
-            --background: #000813;
+            --background: #000000;
+            --wave-speed: 10s;
+            --wave-distance: 5px;
         }
 
         * {
@@ -23,26 +25,26 @@
         }
 
         body {
-            font-family: 'Roboto Mono', monospace;
-            background: var(--background);
+            font-family: "Kanit", sans-serif;
+            font-weight: 300;
+            background-color: #010302;
             color: #fff;
-            overflow-x: hidden;
             line-height: 1.6;
         }
 
         #cursor {
-            width: 20px;
-            height: 20px;
-            background: var(--neon-green);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: all 0.3s ease;
-            mix-blend-mode: screen;
-            box-shadow: 0 0 20px var(--neon-green);
-        }
+    width: 20px;
+    height: 20px;
+    background: var(--neon-green);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, background 0.3s, box-shadow 0.3s;
+    mix-blend-mode: screen;
+    box-shadow: 0 0 20px var(--neon-green);
+}
 
         #cursor.expanded {
             width: 50px;
@@ -55,15 +57,56 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
+            width: 120%;
             height: 100%;
             background: 
                 linear-gradient(transparent 95%, rgba(0, 255, 157, 0.1) 100%),
-                linear-gradient(90deg, transparent 95%, rgba(0, 255, 157, 0.1) 100%);
+                linear-gradient(90deg, transparent 95%, rgba(7, 121, 43, 0.236) 100%);
             background-size: 50px 50px;
             pointer-events: none;
             z-index: -1;
+            pointer-events: none;
+            animation: waveAnimation 1s ease-in-out infinite;
+            animation: 
+        waveX var(--wave-speed) ease-in-out infinite,
+        waveY calc(var(--wave-speed) * 2.0) ease-in-out infinite;
+    transform-origin: center;
         }
+        @keyframes waveAnimation {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    25% { transform: translateY(5px) translateX(-5px); }
+    50% { transform: translateY(-5px) translateX(5px); }
+    75% { transform: translateY(3px) translateX(-3px); }
+}
+        @keyframes waveX {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(var(--wave-distance)); }
+}
+
+@keyframes waveY {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(var(--wave-distance)); }
+}
+        #grid-overlay::before,
+#grid-overlay::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    z-index: -1;
+}
+
+#grid-overlay::before {
+    animation: waveX calc(var(--wave-speed) * 1.2) ease-in-out infinite reverse;
+}
+
+#grid-overlay::after {
+    animation: waveY calc(var(--wave-speed) * 0.8) ease-in-out infinite reverse;
+}
+
 
         nav {
             position: fixed;
@@ -130,6 +173,7 @@
             margin-bottom: 1rem;
             animation: glitch 5s infinite;
             text-shadow: 0 0 10px var(--neon-green);
+            color: var(--neon-green);
         }
 
         .hero p {
@@ -171,6 +215,26 @@
             box-shadow: 0 0 20px var(--neon-green);
         }
 
+        .skill-card h3, .skill-card h2, .skill-card h5 {
+            color: var(--neon-green);
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+        }
+
+        .two-column-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            list-style: none;
+            padding: 0;
+        }
+
+        .two-column-list li {
+            padding: 0.5rem;
+            text-align: left;
+        }
+
         .contact-form {
             max-width: 600px;
             margin: 0 auto;
@@ -198,7 +262,52 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
+        body::before, body::after,
+body::before, body::after {
+  content: '';
+  position: absolute;
+  background: rgba(0,0,0,0.2);
+  transition: transform 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+body::before, body::after {
+  left: 0;
+  right: 0;
+  height: 1px;
+}
+
+body::before {
+  top: calc(var(--y, 0) * 1px);
+}
+
+body::after {
+  bottom: calc((100% - var(--y, 0)) * 1px);
+}
+
+body:hover::before, body:hover::after {
+  transform: scaleY(3);
+}
+
+body::before, body::after {
+  top: 0;
+  bottom: 0;
+  width: 1px;
+}
+
+body::before {
+  left: calc(var(--x, 0) * 1px);
+}
+
+body::after {
+  right: calc((100% - var(--x, 0)) * 1px);
+}
+
+body:hover::before, body:hover::after {
+  transform: scaleX(3);
+}
+
 
         .contact-form button:hover {
             background: var(--dark-green);
@@ -254,6 +363,10 @@
             section {
                 padding: 4rem 1rem;
             }
+
+            .two-column-list {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -266,20 +379,21 @@
             <a href="#home">Home</a>
             <a href="#about">About</a>
             <a href="#skills">Skills</a>
+            <a href="#Hobbies">Hobbies</a>
+            <a href="#languages">languages</a>
+            <a href="#certificates">Certificates</a>
             <a href="#projects">Projects</a>
             <a href="#contact">Contact</a>
         </div>
-    </nav>
-
+    </nav> 
     <section id="home" class="hero">
         <h1>Welcome to My Portfolio</h1>
         <p>Frontend Developer & UI Designer | Computer Science Student at Indian Institute of Technology Patna</p>
     </section>
-
     <section id="about">
         <h2 class="section-title">About Me</h2>
         <div class="section-content">
-            <p>I'm a passionate computer science student at IIT Patna, where I'm building a solid foundation in programming, data analysis, and machine learning. With hands-on experience in Python, Java, and web development (HTML, CSS, JavaScript), I'm eager to create innovative tech solutions. I thrive on challenges, especially those that require critical thinking and problem-solving, and I'm actively preparing to clear FAANG interviews and pursue a career as a Software Development Engineer.</p>
+            <p>I am a passionate Computer Science student at IIT Patna, where I am building a strong foundation in programming, data analysis, machine learning, and software development. Currently, I am focusing on mastering Data Structures and Algorithms (DSA), Object-Oriented Programming (OOPs), and problem-solving techniques essential for a career in software engineering. With hands-on experience in Java, Python, and web development, I am actively working on improving my coding skills. I deal with challenges that require critical thinking, and I am preparing to clear FAANG interviews to pursue a career as a Software Development Engineer.</p>
         </div>
     </section>
 
@@ -295,23 +409,120 @@
                 </ul>
             </div>
             <div class="skill-card">
-                <h3>Backend</h3>
+                <h3>Coding Languages</h3>
                 <ul>
-                    <li>Python</li>
                     <li>Java</li>
+                    <li>Python</li>
+                    <li>Javascript</li>
+                    <li>php</li>
+                 </ul>
+            </div>
+            <div class="skill-card">
+                <h3>DBMS tools </h3>
+                <ul>
                     <li>SQL</li>
-                </ul>
+                    <li>MySQL</li>
+                    <li>Mongo DB</li>
+                    <li>PostgreSQL</li>
+                    <li>phpmy admin</li>
+                    <li>SQLite</li>
+                 </ul>
+            </div>
+            <div class="skill-card">
+                <h5>Libraries & Frameworks </h5>
+                <ul class="two-column-list">
+                    <li>Tailwind css</li>
+                    <li>Bootstrap</li>
+                    <li>Django</li>
+                    <li>Pandas</li>
+                    <li>Numpy</li>
+                    <li>flask</li>
+                    <li>OpenCV</li>
+                    <li>Scikit learn</li>
+                    <li>seaborn</li>
+                    <li>Pytorch</li>
+                    <li> React.js </li>
+                    <li> Node.js </li>
+                    <li> Next.js </li>
+                    <li> Express.js </li>
+                    <li> Vue.js </li>
+                    <li>Three.js</li>
+                 </ul>
             </div>
             <div class="skill-card">
                 <h3>Tools</h3>
                 <ul>
                     <li>Git</li>
+                    <li>Github</li>
                     <li>VS Code</li>
-                    <li>Docker</li>
+                    <li>Google Colab</li>
+                    <li>Jupyter Notebook</li>
                 </ul>
             </div>
+            <div class="skill-card">
+                <h3>Devops</h3>
+                <ul>
+                    <li>GCP</li>
+                    <li>Azure</li>
+                    <li>AWS</li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <h3>Software</h3>
+                <ul>
+                    <li>Figma</li>
+                    <li>Matlab</li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <h3>Soft Skills</h3>
+                <ul>
+                    <li>Critical Thinking</li>
+                    <li>Team Problem-Solving</li>
+                    <li>Collaborative Workflow</li>
+                    <li>Corporate Communications </li>
+                    <li> Leadership skills</li>
+                </ul>
+            </div>
+        </section>
+            <section id="Hobbies">
+            <div class="skill-card">
+                <h2>My Hobbies</h2> 
+                <ul class="two-column-list">
+                    <li>Reading</li>
+                    <li>Music</li>
+                    <li>Travelling</li> 
+                    <li>Coding</li> 
+                    <li>Singing</li> 
+                    <li>football</li> 
+                    <li>cooking</li> 
+                    <li>gaming</li> 
+                    <li>photography</li> 
+                    <li>using ai in everyday life</li> 
+                </ul>
+            </div>
+            <section id="languages">
+            <div class="skill-card">
+                <h2>Language proficiency</h2>
+        <ul>
+            <li>English: Full Professional Proficiency</li>
+            <li> Hindi: Full Professional Proficiency</li>
+            <li>Bengali: Full Professional Proficiency</li>
+        </ul>
+            </div>
+            <section id="certificates">
+            <div class="skill-card">
+                <h2>My Certificates</h2>
+        <ul>
+            <li>Python Basics Certificate from Infosys and Nielit Calicut</li>
+            <li>Web programming with python and javascript (Harvard University)</li>
+            <li>Mongo DB with Java certificate from GFG & Mongo DB</li>
+            <li>Product management certificate from Google & Mind your product </li>
+        </ul>
         </div>
     </section>
+    </section>
+   
 
     <section id="projects">
         <h2 class="section-title">Projects</h2>
@@ -326,7 +537,19 @@
             </div>
             <div class="project-card">
                 <h3>Project 3</h3>
+                <p>AI-Powered Mental Health Chatbot.</p>
+            </div>
+            <div class="project-card">
+                <h3>Project 4</h3>
+                <p>Personal Portfolio Website.</p>
+            </div>
+            <div class="project-card">
+                <h3>Project 5</h3>
                 <p>Interactive user experience with smooth animations.</p>
+            </div>
+            <div class="project-card">
+                <h3>Project 6</h3>
+                <p>Data Analysis on Student Performance</p>
             </div>
         </div>
     </section>
@@ -340,79 +563,75 @@
             <button type="submit">Send Message</button>
         </form>
     </section>
-<script>
-    const cursor = document.getElementById('cursor');
-    let cursorX = 0, cursorY = 0, targetX = 0, targetY = 0;
-    const smoothFactor = 0.15; // Adjust for smoother movement
 
-    document.addEventListener('mousemove', (e) => {
-        targetX = e.clientX;
-        targetY = e.clientY;
-    });
+    <script>
+        const cursor = document.getElementById('cursor');
+        let cursorX = 0, cursorY = 0, targetX = 0, targetY = 0;
+        const smoothFactor = 0.15;
 
-    function lerp(start, end, factor) {
-        return start + (end - start) * factor;
-    }
-
-    function updateCursorPosition() {
-        cursorX = lerp(cursorX, targetX, smoothFactor);
-        cursorY = lerp(cursorY, targetY, smoothFactor);
-        cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
-        requestAnimationFrame(updateCursorPosition);
-    }
-
-    updateCursorPosition();
-
-    // Cursor hover effect
-    document.querySelectorAll('a, button, .project-card, .skill-card, input, textarea').forEach(element => {
-        element.addEventListener('mouseenter', () => {
-            cursor.classList.add('expanded');
+        document.addEventListener('mousemove', (e) => {
+            targetX = e.clientX;
+            targetY = e.clientY;
         });
-        element.addEventListener('mouseleave', () => {
-            cursor.classList.remove('expanded');
-        });
-    });
 
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
+        function lerp(start, end, factor) {
+            return start + (end - start) * factor;
+        }
+
+        function updateCursorPosition() {
+            cursorX = lerp(cursorX, targetX, smoothFactor);
+            cursorY = lerp(cursorY, targetY, smoothFactor);
+            cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+            requestAnimationFrame(updateCursorPosition);
+        }
+
+        updateCursorPosition();
+
+        document.querySelectorAll('a, button, .project-card, .skill-card, input, textarea').forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.classList.add('expanded');
+            });
+            element.addEventListener('mouseleave', () => {
+                cursor.classList.remove('expanded');
             });
         });
-    });
 
-    // Intersection Observer for fade-in effect
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
         });
-    }, { threshold: 0.1 });
 
-    document.querySelectorAll('section').forEach(section => {
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(50px)';
-        section.style.transition = 'all 0.6s ease-out';
-        observer.observe(section);
-    });
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
 
-    // Parallax effect
-    window.addEventListener('scroll', () => {
         document.querySelectorAll('section').forEach(section => {
-            const scroll = window.pageYOffset;
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            if (scroll > sectionTop - window.innerHeight / 2 && scroll < sectionTop + sectionHeight) {
-                section.style.opacity = 1;
-                section.style.transform = 'translateY(0)';
-            }
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(50px)';
+            section.style.transition = 'all 0.6s ease-out';
+            observer.observe(section);
         });
-    });
-</script>
-
+        document.addEventListener('mousemove', (e) => {
+  const x = Math.floor(e.clientX / 50) * 50;
+  const y = Math.floor(e.clientY / 50) * 50;
+  document.body.style.setProperty('--x', x);
+  document.body.style.setProperty('--y', y);
+});
+document.addEventListener('mousemove', (e) => {
+    const x = Math.floor(e.clientX / 50) * 50;
+    const y = Math.floor(e.clientY / 50) * 50;
+    document.body.style.setProperty('--x', x);
+    document.body.style.setProperty('--y', y);
+});
+    </script>
 </body>
 </html>
